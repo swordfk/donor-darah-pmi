@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".DaftarKPMI">
+
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:text="Daftar Kantor PMI"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_below="@id/card1"
+        android:id="@+id/text"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_below="@id/text"
+        android:id="@+id/garis"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:outlineSpotShadowColor="@color/black"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_below="@id/garis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            tools:listitem="@layout/list_kpmi"
+            android:layout_height="wrap_content"
+            android:id="@+id/recyclerview"/>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
