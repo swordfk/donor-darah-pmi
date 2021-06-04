@@ -71,11 +71,16 @@ public class MainActivity2 extends AppCompatActivity {
                     Toast.makeText(MainActivity2.this, response.body().getStatus()+"", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(MainActivity2.this, MainActivity.class));
                     finish();
+                }else {
+                    loading.dismiss();
+                    Toast.makeText(MainActivity2.this,response.message()+ "", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<MessageResponse> call, Throwable t) {
+                loading.dismiss();
+                Toast.makeText(MainActivity2.this, t.getMessage()+"", Toast.LENGTH_SHORT).show();
 
             }
         });

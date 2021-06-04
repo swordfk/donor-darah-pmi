@@ -75,6 +75,8 @@ public class DetailKPMI2 extends AppCompatActivity implements OnMapReadyCallback
     Dialog dialog;
     ProgressDialog loading;
 
+    List<Jadwal> jadwals = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +88,7 @@ public class DetailKPMI2 extends AppCompatActivity implements OnMapReadyCallback
         String address = i.getStringExtra("alamat");
         latitudes = Double.parseDouble(i.getStringExtra("lat"));
         longitudes = Double.parseDouble(i.getStringExtra("lng"));
-        List<Jadwal> listJadwal = (List <Jadwal>) i.getSerializableExtra("listJadwal");
+//        List<Jadwal> listJadwal = (List <Jadwal>) i.getSerializableExtra("listJadwal");
 
         Log.i("TAG", "onCreate: "+latitudes+longitudes);
 
@@ -94,6 +96,7 @@ public class DetailKPMI2 extends AppCompatActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(DetailKPMI2.this);
 
+        getJadwal(idKpmi);
         getLastToken();
         daftar = findViewById(R.id.daftar);
         petunjuk = findViewById(R.id.petunjuk);
@@ -103,8 +106,6 @@ public class DetailKPMI2 extends AppCompatActivity implements OnMapReadyCallback
         linearLayoutManager2 = new LinearLayoutManager(this);
         rcJadwal.setLayoutManager(linearLayoutManager2);
         rcJadwal.setHasFixedSize(true);
-        adapter2 = new AdapterJadwal(this, listJadwal);
-        rcJadwal.setAdapter(adapter2);
 
         daftar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,5 +205,29 @@ public class DetailKPMI2 extends AppCompatActivity implements OnMapReadyCallback
         if (list != null){
             token ="Bearer "+ list.get(list.size()-1).getToken();
         }
+    }
+
+    private void getJadwal(int idKpmi){
+        getLastToken();
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<List<Jadwal>> call = apiService.getJadwal(token, idKpmi);
+        call.enqueue(new Callback<List<Jadwal>>() {
+            @Override
+            public void onResponse(Call<List<Jadwal>> call, Response<List<Jadwal>> response) {
+                if (response.code()==200){
+                    jadwals = response.body();
+
+                    adapter2 = new AdapterJadwal(DetailKPMI2.this, jadwals);
+                    rcJadwal.setAdapter(adapter2);
+                }else {
+                    Toast.makeText(DetailKPMI2.this,response.code()+ " "+response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Jadwal>> call, Throwable t) {
+
+            }
+        });
     }
 }

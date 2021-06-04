@@ -34,9 +34,9 @@ public class AdapterJadwal extends RecyclerView.Adapter<AdapterJadwal.viewHolder
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        holder.waktu.setText(listJadwal.get(position).getDate());
-        holder.nama.setText(listJadwal.get(position).getKpmi().getNama());
-        holder.alamat.setText(listJadwal.get(position).getKpmi().getAlamat());
+        holder.waktu.setText(": "+listJadwal.get(position).getDate());
+        holder.nama.setText(": "+listJadwal.get(position).getKpmi().getNama());
+        holder.alamat.setText(": "+listJadwal.get(position).getKpmi().getAlamat());
     }
 
     @Override

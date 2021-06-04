@@ -17,6 +17,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ApiService {
     @POST("login")
@@ -44,6 +45,10 @@ public interface ApiService {
     Call<MessageResponse> addJadwal(
             @Header("Authorization") String token,
             @Body Jadwal jadwal);
+    @POST("jadwal")
+    Call<List<Jadwal>> getJadwal(
+            @Header("Authorization") String token,
+            @Query("id") int id);
     @POST("kpmi")
     Call<MessageResponse> addKPMI(
             @Header("Authorization") String token,

@@ -61,6 +61,8 @@ public class DetailKMI extends AppCompatActivity {
     String token;
     ProgressDialog loading;
 
+    List<Jadwal> jadwals = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +73,9 @@ public class DetailKMI extends AppCompatActivity {
         String name = i.getStringExtra("nama");
         String address = i.getStringExtra("alamat");
         List<Darah> listDarah = (List<Darah>) i.getSerializableExtra("listDarah");
-        List<Jadwal> listJadwal = (List<Jadwal>) i.getSerializableExtra("listJadwal");
+//        List<Jadwal> listJadwal = (List<Jadwal>) i.getSerializableExtra("listJadwal");
 
+        getJadwal(idKpmi);
         getLastToken();
         tambahJadwal = findViewById(R.id.addJadwal);
         tambahDarah = findViewById(R.id.tambahDarah);
@@ -88,8 +91,6 @@ public class DetailKMI extends AppCompatActivity {
         linearLayoutManager2 = new LinearLayoutManager(this);
         rcJadwal.setLayoutManager(linearLayoutManager2);
         rcJadwal.setHasFixedSize(true);
-        adapter2 = new AdapterJadwal(this, listJadwal);
-        rcJadwal.setAdapter(adapter2);
 
         nama.setText(name);
         alamat.setText(address);
@@ -253,5 +254,29 @@ public class DetailKMI extends AppCompatActivity {
         if (list != null){
             token ="Bearer "+ list.get(list.size()-1).getToken();
         }
+    }
+
+    private void getJadwal(int idKpmi){
+        getLastToken();
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<List<Jadwal>> call = apiService.getJadwal(token, idKpmi);
+        call.enqueue(new Callback<List<Jadwal>>() {
+            @Override
+            public void onResponse(Call<List<Jadwal>> call, Response<List<Jadwal>> response) {
+                if (response.code()==200){
+                    jadwals = response.body();
+
+                    adapter2 = new AdapterJadwal(DetailKMI.this, jadwals);
+                    rcJadwal.setAdapter(adapter2);
+                }else {
+                    Toast.makeText(DetailKMI.this,response.code()+ " "+response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Jadwal>> call, Throwable t) {
+
+            }
+        });
     }
 }
