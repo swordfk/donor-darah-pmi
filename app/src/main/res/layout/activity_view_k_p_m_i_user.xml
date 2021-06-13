@@ -3,89 +3,141 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:fillViewport="true"
     android:layout_height="match_parent"
     tools:context=".ViewKPMIUser">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/swiperesfresh">
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <RelativeLayout
+        android:fillViewport="true">
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/swiperesfresh">
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <ImageView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:src="@drawable/ayo"
-                android:id="@+id/gambar"/>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card1"
-                android:layout_below="@id/gambar"
-                android:layout_width="match_parent"
-                app:cardElevation="5dp"
-                app:cardCornerRadius="10dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="20dp">
-                <LinearLayout
+                android:layout_height="match_parent">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/gambar"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    android:orientation="vertical">
-                    <TextView
+                    android:layout_height="300dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="20dp"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="10dp">
+                    <LinearLayout
+                        android:padding="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Yuk! Daftar donor darah sekarang!"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"/>
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Kantor PMI Terdekat"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="nama KPMI"
+                            android:textColor="#E53935"
+                            android:textStyle="bold"
+                            android:id="@+id/namaKpmi"
+                            android:textSize="14sp"
+                            android:layout_marginTop="10dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="alamat KPMI"
+                            android:textColor="@color/black"
+                            android:id="@+id/alamat"
+                            android:textSize="14sp"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/black"
+                            android:layout_marginVertical="5dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Stok Darah"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:textSize="14sp"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="match_parent"
+                            tools:listitem="@layout/list_darah2"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/recyclerviewD"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                    <Button
-                        android:id="@+id/daftarNow"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card1"
+                    android:layout_below="@id/gambar"
+                    android:layout_width="match_parent"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="20dp">
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Daftar donor darah"
-                        app:cornerRadius="10dp"
-                        android:textColor="@color/white"
-                        android:layout_marginTop="20dp"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Yuk! Daftar donor darah sekarang!"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:text="Daftar Kantor PMI"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_below="@id/card1"
-                android:id="@+id/text"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_below="@id/text"
-                android:id="@+id/garis"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                android:outlineSpotShadowColor="@color/black"/>
+                        <Button
+                            android:id="@+id/daftarNow"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Daftar donor darah"
+                            app:cornerRadius="10dp"
+                            android:textColor="@color/white"
+                            android:layout_marginTop="20dp"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-            <androidx.core.widget.NestedScrollView
-                android:layout_below="@id/garis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fillViewport="true">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:text="Daftar Kantor PMI"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_below="@id/card1"
+                    android:id="@+id/text"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_below="@id/text"
+                    android:id="@+id/garis"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:outlineSpotShadowColor="@color/black"/>
+
                 <androidx.recyclerview.widget.RecyclerView
+                    android:layout_below="@id/garis"
                     android:layout_width="match_parent"
                     tools:listitem="@layout/list_kpmi"
-                    android:layout_height="wrap_content"
+                    android:layout_height="500dp"
                     android:id="@+id/recyclerview"/>
-            </androidx.core.widget.NestedScrollView>
 
-        </RelativeLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </RelativeLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cdAss"

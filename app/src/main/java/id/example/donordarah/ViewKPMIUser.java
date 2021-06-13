@@ -13,16 +13,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import id.example.AddKPMI;
 import id.example.ViewPendonor2;
+import id.example.adapter.AdapterDarah;
+import id.example.adapter.AdapterDarah2;
 import id.example.adapter.AdapterKpmi;
 import id.example.adapter.AdapterKpmi2;
 import id.example.model.LoginToDB;
 import id.example.retrofit.ApiClient;
 import id.example.retrofit.ApiService;
+import id.example.retrofit.response.Darah;
 import id.example.retrofit.response.KpmiResponse;
 import id.example.room.AppDatabase;
 import retrofit2.Call;
@@ -38,19 +43,28 @@ public class ViewKPMIUser extends AppCompatActivity {
     String token;
     Button daftarNow;
     ProgressDialog loading;
-    List<KpmiResponse> kpmiResponseList;
+    List<KpmiResponse> kpmiResponseList = new ArrayList<>();
     private SwipeRefreshLayout swipeRefreshLayout;
+    TextView nama, alamat;
+    RecyclerView rvD;
+    List<Darah> darahList = new ArrayList<>();
+    RecyclerView.Adapter adapter2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_k_p_m_i_user);
 
+        nama = findViewById(R.id.namaKpmi);
+        alamat = findViewById(R.id.alamat);
+        rvD = findViewById(R.id.recyclerviewD);
         cdAss = findViewById(R.id.cdAss);
         swipeRefreshLayout = findViewById(R.id.swiperesfresh);
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
+        rvD.setLayoutManager(new LinearLayoutManager(this));
+        rvD.setHasFixedSize(true);
         daftarNow = findViewById(R.id.daftarNow);
 
         cdAss.setOnClickListener(new View.OnClickListener() {
@@ -110,8 +124,13 @@ public class ViewKPMIUser extends AppCompatActivity {
                     swipeRefreshLayout.setRefreshing(false);
                     loading.dismiss();
                     kpmiResponseList = response.body();
+                    darahList = response.body().get(0).getDarah();
 
+                    nama.setText(response.body().get(0).getNama());
+                    alamat.setText(response.body().get(0).getAlamat());
                     adapter = new AdapterKpmi2(ViewKPMIUser.this, kpmiResponseList);
+                    adapter2 = new AdapterDarah2(ViewKPMIUser.this, darahList);
+                    rvD.setAdapter(adapter2);
                     recyclerView.setAdapter(adapter);
                 }else {
 
